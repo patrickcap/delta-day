@@ -4,7 +4,7 @@ A tool to help you start and track small personal improvements, every day.
 
 <figure>
   <img src="assets\images\delta_day_window_example.png" alt="Delta Day main window.">
-  <figcaption>Delta Day main window.</figcaption>
+  <figcaption><p style="text-align: center;"><i>Delta Day main window.</i></p></figcaption>
 </figure>
 
 Delta Day encourages personal improvement by making small incremental progress towards things you are interested in, each and every day. Having a focus on small incremements reduces the chances of wasting time thinking too far into the future about large, grand plans, and instead shifts your focus into just starting and doing something. Whilst this can lead to occasionally finding dead-ends, it generally results in greater personal improvement in the long-run compared to doing nothing and trying to plan too far into the future.
