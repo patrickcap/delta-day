@@ -1,9 +1,34 @@
+"""
+This Python script implements a simple text entry and category tracking application using PyQt5.
+
+**Features:**
+
+- Users can enter text and select a category from a dropdown menu.
+- Timestamps are automatically added to each entry.
+- Entries are stored in an internal array, sorted by timestamp (descending order).
+- Categories are tracked in a dictionary, with counts for each category.
+- A text display box shows the history of entered text entries.
+- A category count table displays the categories and their respective counts.
+
+**How to Use:**
+
+1. Run the script: `python main.py`
+2. Enter text in the "Enter your text here" box.
+3. Select a category from the dropdown menu (or add a new one using the "New Category" box).
+4. Click the "Enter" button to add the text entry with its category and timestamp.
+5. The entered text appears in the "Text History" box.
+6. The category count table updates to reflect the new entry.
+
+"""
+
+import datetime
+import sys
+
 from PyQt5.QtWidgets import (
     QApplication,
     QWidget,
     QVBoxLayout,
     QHBoxLayout,
-    QLabel,
     QTableWidget,
     QTableWidgetItem,
     QTextEdit,
@@ -11,8 +36,6 @@ from PyQt5.QtWidgets import (
     QPushButton,
     QComboBox
 )
-import datetime
-import sys
 
 class Window(QWidget):
     def __init__(self):
@@ -199,7 +222,6 @@ class Window(QWidget):
             self.category_count_table.setItem(row, 1, count_item)
 
             row += 1
-
 
     def set_custom_theme(self):
         """
