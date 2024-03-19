@@ -7,6 +7,7 @@ from PyQt5.QtWidgets import (
     QTextEdit,
     QLineEdit,
     QPushButton,
+    QComboBox
 )
 import datetime
 import sys
@@ -15,6 +16,7 @@ class Window(QWidget):
     def __init__(self):
         super().__init__()
         self.text_array = []  # Initialize an empty array to store text
+        self.category_options = ["Select Category"]  # List to store defined categories
         self.init_ui()
 
     def init_ui(self):
@@ -28,6 +30,27 @@ class Window(QWidget):
         self.text_box = QLineEdit()
         self.text_box.setPlaceholderText("Enter your text here")
         text_box_layout.addWidget(self.text_box)
+
+        # Create category selection
+        self.category_box = QComboBox()
+        self.category_box.addItems(self.category_options)  # Add initial options
+
+        # Create new category text box
+        self.new_category_box = QLineEdit()
+        self.new_category_box.setPlaceholderText("New Category")
+
+        # Create button to add new category
+        self.add_category_button = QPushButton("Add")
+        self.add_category_button.clicked.connect(self.handle_add_category)
+
+        # Layout for category selection
+        category_layout = QHBoxLayout()
+        category_layout.addWidget(self.category_box)
+        category_layout.addWidget(self.new_category_box)
+        category_layout.addWidget(self.add_category_button)
+
+        # Add text box, category selection, and button to layout
+        text_box_layout.addLayout(category_layout)
 
         # Create enter button
         self.enter_button = QPushButton("Enter")
@@ -68,15 +91,28 @@ class Window(QWidget):
         # Move window to center
         self.move(center_x, center_y)
 
+    def handle_add_category(self):
+        # Get new category text
+        new_category = self.new_category_box.text().strip()
+
+        # Check if new category is empty or already exists
+        if new_category and new_category not in self.category_options:
+            self.category_options.append(new_category)
+            self.category_box.addItem(new_category)
+            self.new_category_box.clear()  # Clear new category text box
+
     def handle_enter_click(self):
         # Get text from the box
         text = self.text_box.text()
 
         # Check if text is empty
         if text:
+            # Get selected category
+            selected_category = self.category_box.currentText()
+
             # Add timestamp to the text
             timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-            formatted_text = f"{timestamp}: {text}"
+            formatted_text = f"{timestamp} - {selected_category}: {text}"
 
             # Append formatted text to the array
             self.text_array.append(formatted_text)
@@ -89,6 +125,7 @@ class Window(QWidget):
 
             # Update entries display box
             self.update_entries_box()
+
 
     def update_entries_box(self):
         # Clear current entries
