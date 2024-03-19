@@ -5,7 +5,7 @@ from PyQt5.QtWidgets import (
     QHBoxLayout,
     QLabel,
     QTextEdit,
-    QLineEdit,
+    QLineEdit,  
     QPushButton,
     QComboBox
 )
@@ -71,6 +71,9 @@ class Window(QWidget):
         # Set window title
         self.setWindowTitle("Delta Day")
 
+        # Apply custom theme (colors)
+        self.set_custom_theme()
+
         # Center window (same as before)
         self.center_window()
 
@@ -134,6 +137,26 @@ class Window(QWidget):
         # Add all entries from the array to the display box
         for entry in self.text_array:
             self.entries_box.append(entry + "\n")  # Add newline character after each entry
+
+    def set_custom_theme(self):
+        """
+        This method applies a custom theme to the window with a background color
+        of #154c79 and text color of #eab676.
+        """
+        stylesheet = """
+            QWidget {
+                background-color: #154c79;
+                color: #eab676;
+            }
+            QLineEdit, QTextEdit, QPushButton, QComboBox {
+                background-color: #293747;
+                color: #ffffff;
+                border: 1px solid #ffffff;
+                border-radius: 4px;
+                padding: 5px;
+            }
+        """
+        self.setStyleSheet(stylesheet)
 
 if __name__ == "__main__":
     # Create application instance
