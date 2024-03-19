@@ -13,10 +13,10 @@ This Python script implements a simple text entry and category tracking applicat
 **How to Use:**
 
 1. Run the script: `python main.py`
-2. Enter text in the "Enter your text here" box.
-3. Select a category from the dropdown menu (or add a new one using the "New Category" box).
-4. Click the "Enter" button to add the text entry with its category and timestamp.
-5. The entered text appears in the "Text History" box.
+2. Enter text in the 'Enter your text here' box.
+3. Select a category from the dropdown menu (or add a new one using the 'New Category' box).
+4. Click the 'Enter' button to add the text entry with its category and timestamp.
+5. The entered text appears in the 'Text History' box.
 6. The category count table updates to reflect the new entry.
 
 """
@@ -32,18 +32,25 @@ from PyQt5.QtWidgets import (
     QTableWidget,
     QTableWidgetItem,
     QTextEdit,
-    QLineEdit,  
+    QLineEdit,
     QPushButton,
     QComboBox
 )
+from PyQt5.QtGui import QIcon
 
 class Window(QWidget):
     def __init__(self):
         super().__init__()
         self.text_array = []  # Initialize an empty array to store text
-        self.category_options = ["Select Category"]  # List to store defined categories
+        self.category_options = ['Select Category']  # List to store defined categories
         self.category_counts = {}  # Dictionary to store category counts
         self.init_ui()
+
+        # Create a QIcon object (replace with your actual path or resource file name)
+        icon = QIcon('assets/images/delta_day_icon.png')
+
+        # Set the window icon
+        self.setWindowIcon(icon)
 
     def init_ui(self):
         # Create main layout
@@ -54,7 +61,7 @@ class Window(QWidget):
 
         # Create text box
         self.text_box = QLineEdit()
-        self.text_box.setPlaceholderText("Enter your text here")
+        self.text_box.setPlaceholderText('Enter your text here')
         text_box_layout.addWidget(self.text_box)
 
         # Create category selection
@@ -63,10 +70,10 @@ class Window(QWidget):
 
         # Create new category text box
         self.new_category_box = QLineEdit()
-        self.new_category_box.setPlaceholderText("New Category")
+        self.new_category_box.setPlaceholderText('New Category')
 
         # Create button to add new category
-        self.add_category_button = QPushButton("Add")
+        self.add_category_button = QPushButton('Add')
         self.add_category_button.clicked.connect(self.handle_add_category)
 
         # Layout for category selection
@@ -79,7 +86,7 @@ class Window(QWidget):
         text_box_layout.addLayout(category_layout)
 
         # Create enter button
-        self.enter_button = QPushButton("Enter")
+        self.enter_button = QPushButton('Enter')
         self.enter_button.clicked.connect(self.handle_enter_click)  # Connect button click to a function
         text_box_layout.addWidget(self.enter_button)
 
@@ -94,7 +101,7 @@ class Window(QWidget):
         # Create category count table
         self.category_count_table = QTableWidget()
         self.category_count_table.setColumnCount(2)  # Two columns: Category, Count
-        self.category_count_table.setHorizontalHeaderLabels(["Category", "Count"])
+        self.category_count_table.setHorizontalHeaderLabels(['Category', 'Count'])
         self.update_category_count_table()  # Update table on startup
 
         # Set layout to window
@@ -103,7 +110,7 @@ class Window(QWidget):
         self.setLayout(layout)
 
         # Set window title
-        self.setWindowTitle("Delta Day")
+        self.setWindowTitle('Delta Day')
 
         # Apply custom theme (colors) (optional)
         # Uncomment to apply a custom theme
@@ -152,8 +159,8 @@ class Window(QWidget):
             selected_category = self.category_box.currentText()
 
             # Add timestamp to the text
-            timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-            formatted_text = f"{timestamp} - {selected_category}: {text}"
+            timestamp = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+            formatted_text = f'{timestamp} - {selected_category}: {text}'
 
             # Append formatted text to the array
             self.text_array.append(formatted_text)
@@ -187,7 +194,7 @@ class Window(QWidget):
 
         # Add all entries from the array to the display box
         for entry in self.text_array:
-            self.entries_box.append(entry + "\n")  # Add newline character after each entry
+            self.entries_box.append(entry + '\n')  # Add newline character after each entry
 
     def update_category_count_table(self):
         """
@@ -204,7 +211,7 @@ class Window(QWidget):
         # Loop through sorted entries to update category counts
         for entry in self.text_array:
             # Extract category from the formatted text (assuming format: timestamp - category: text)
-            category = entry.split(":")[1].strip()
+            category = entry.split(':')[1].strip()
 
             # Update category count (considering new categories)
             if category in category_counts:
@@ -243,7 +250,7 @@ class Window(QWidget):
         """
         self.setStyleSheet(stylesheet)
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     # Create application instance
     app = QApplication([])
 
