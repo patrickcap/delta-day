@@ -38,6 +38,9 @@ from PyQt5.QtWidgets import (
 )
 from PyQt5.QtGui import QIcon
 
+# Create dictionary to store category counts (might have new entries)
+CATEGORY_COUNTS = {}
+
 class Window(QWidget):
     def __init__(self):
         super().__init__()
@@ -136,7 +139,6 @@ class Window(QWidget):
         # Move window to center
         self.move(center_x, center_y)
 
-
     def handle_add_category(self):
         # Get new category text
         new_category = self.new_category_box.text().strip()
@@ -157,6 +159,12 @@ class Window(QWidget):
         if text:
             # Get selected category
             selected_category = self.category_box.currentText()
+
+            # Update category count (considering new categories)
+            if selected_category in CATEGORY_COUNTS:
+                CATEGORY_COUNTS[selected_category] += 1
+            else:
+                CATEGORY_COUNTS[selected_category] = 1
 
             # Add timestamp to the text
             timestamp = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
@@ -203,25 +211,13 @@ class Window(QWidget):
         and rebuilding the table based on the updated category counts.
         """
         # Clear existing table rows
-        self.category_count_table.setRowCount(0)  # Reset row count to zero
+        self.category_count_table.setRowCount(len(CATEGORY_COUNTS))  # Reset row count to zero
 
-        # Create dictionary to store category counts (might have new entries)
-        category_counts = {}
-
-        # Loop through sorted entries to update category counts
-        for entry in self.text_array:
-            # Extract category from the formatted text (assuming format: timestamp - category: text)
-            category = entry.split(':')[1].strip()
-
-            # Update category count (considering new categories)
-            if category in category_counts:
-                category_counts[category] += 1
-            else:
-                category_counts[category] = 1
+        print(CATEGORY_COUNTS)
 
         # Rebuild table with updated category counts
         row = 0
-        for category, count in category_counts.items():
+        for category, count in CATEGORY_COUNTS.items():
             category_item = QTableWidgetItem(category)
             count_item = QTableWidgetItem(str(count))
 
